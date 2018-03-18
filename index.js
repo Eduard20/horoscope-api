@@ -13,6 +13,49 @@ Routes.push({
     }
 });
 
+const categories = [
+    {
+        name: 'business',
+        order: 1,
+        theme: 'red'
+    },
+    {
+        name: 'common',
+        order: 2,
+        theme: 'green'
+    },
+    {
+        name: 'love',
+        order: 3,
+        theme: 'orange'
+    },
+    {
+        name: 'health',
+        order: 4,
+        theme: 'blue'
+    },
+    {
+        name: 'car',
+        order: 5,
+        theme: 'orange'
+    },
+    {
+        name: 'beauty',
+        order: 6,
+        theme: 'blue'
+    },
+    {
+        name: 'erotic',
+        order: 7,
+        theme: 'yellow'
+    },
+    {
+        name: 'gold',
+        order: 8,
+        theme: 'red'
+    }
+];
+
 Routes.push({
     method: 'GET',
     path: '/api/zodiac/categories',
@@ -20,41 +63,9 @@ Routes.push({
         handler: (request, h) => {
             return {
                 meta: {
-                    status: "200"
+                    status: '200'
                 },
-                data: [
-                    {
-                        name: "business",
-                        order: 1
-                    },
-                    {
-                        name: "common",
-                        order: 2
-                    },
-                    {
-                        name: "love",
-                        order: 3
-                    },
-                    {
-                        name: "health",
-                        order: 4
-                    },
-                    {
-                        name: "car",
-                        order: 5
-                    },{
-                        name: "beauty",
-                        order: 6
-                    },
-                    {
-                        name: "erotic",
-                        order: 7
-                    },{
-                        name: "gold",
-                        order: 8
-                    },
-
-                ],
+                data: categories,
                 pagination: {
 
                 }
@@ -75,7 +86,7 @@ Routes.push({
     const swaggerOptions = {
         info: {
             title: 'Test API Documentation',
-            version: "0.0.1",
+            version: '0.0.1',
         }
     };
 
