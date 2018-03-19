@@ -17,7 +17,7 @@ const categories = [
     {
         name: 'business',
         order: 1,
-        theme: 'red'
+        theme: 'purple'
     },
     {
         name: 'common',
@@ -32,27 +32,27 @@ const categories = [
     {
         name: 'health',
         order: 4,
-        theme: 'blue'
+        theme: 'purple'
     },
     {
         name: 'car',
         order: 5,
-        theme: 'orange'
+        theme: 'green'
     },
     {
         name: 'beauty',
         order: 6,
-        theme: 'blue'
+        theme: 'orange'
     },
     {
         name: 'erotic',
         order: 7,
-        theme: 'yellow'
+        theme: 'purple'
     },
     {
         name: 'gold',
         order: 8,
-        theme: 'red'
+        theme: 'green'
     }
 ];
 
