@@ -79,7 +79,6 @@ Routes.push({
 
 (async () => {
     const server = await new Hapi.Server({
-        host: "https://horoscope-endpoint.herokuapp.com",
         port: parseInt(process.env.PORT) || 3000
     });
 
