@@ -79,6 +79,7 @@ Routes.push({
 
 (async () => {
     const server = await new Hapi.Server({
+        host: process.env.HOST || process.env.HOSTNAME,
         port: parseInt(process.env.PORT) || 3000
     });
 
