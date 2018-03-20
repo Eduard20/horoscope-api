@@ -15,12 +15,12 @@ Routes.push({
 
 const categories = [
     {
-        name: 'business',
+        name: 'common',
         order: 1,
         theme: 'purple'
     },
     {
-        name: 'common',
+        name: 'business',
         order: 2,
         theme: 'green'
     },
