@@ -48,7 +48,7 @@ Routes.push({
             title: 'Test API Documentation',
             version: '0.0.1',
         },
-        host: 'https://endpoints-hapi.herokuapp.com'
+        host: 'endpoints-hapi.herokuapp.com'
     };
 
     await server.register([
