@@ -150,17 +150,18 @@ async function getWeekZodiac(opts) {
 }
 
 function sendResponse(daily, week) {
+    const data = [
+        {yesterday: daily.yesterday[0]},
+        {today: daily.today[0]},
+        {tomorrow: daily.tomorrow[0]},
+        {tomorrow02: daily.tomorrow02[0]},
+        {week: week[0]}
+    ];
     return {
         meta: {
             status: 200
         },
-        data: {
-            yesterday: daily.yesterday[0],
-            today: daily.today[0],
-            tomorrow: daily.tomorrow[0],
-            tomorrow02: daily.tomorrow02[0],
-            week: week[0]
-        }
+        data
     };
 }
 
