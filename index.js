@@ -39,7 +39,7 @@ Routes.push({
 
 Routes.push({
     method: 'GET',
-    path: '/api/zodiac/weekly',
+    path: '/api/zodiac/{category}/{type}',
     config: {
         handler: getZodiacByType,
         description: 'Get Zodiac By type',

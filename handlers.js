@@ -73,19 +73,17 @@ const handlers = {
 
     getZodiacByType: async (request, h) => {
         try {
-            const { date, category, type } = request.query;
+            const { category, type } = request.params;
+            const { date } = request.query;
             if (!urls.daily[category]) return 'something wrong';
             if (HOROSCOPE.daily[category] && HOROSCOPE.daily[category][date]) {
+                console.log('found daily this date');
                 if (HOROSCOPE.weekly) {
-                    return {
-                        meta: {
-                            status: 200
-                        },
-                        data: {
-                            ...HOROSCOPE.daily[category][date][type][0],
-                            week: HOROSCOPE.weekly[type]
-                        }
-                    };
+                    console.log('also found weekly');
+                    return sendResponse(
+                        HOROSCOPE.daily[category][date][type][0],
+                        HOROSCOPE.weekly[type][0][category]
+                    )
                 }
                 const week = await getWeekZodiac(options);
                 return new Promise(resolve => {
@@ -95,15 +93,10 @@ const handlers = {
                             return 'something wrong';
                         }
                         HOROSCOPE.weekly = {...result.horo};
-                        return resolve({
-                            meta: {
-                                status: 200
-                            },
-                            data: {
-                                ...HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
-                                week: HOROSCOPE.weekly[type]
-                            }
-                        });
+                        return resolve(sendResponse(
+                            HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
+                            HOROSCOPE.weekly[type][0][category]
+                        ))
                     });
                 })
             }
@@ -121,33 +114,23 @@ const handlers = {
                     HOROSCOPE.daily[category] = {};
                     HOROSCOPE.daily[category][result.horo.date[0].$.today] = {...result.horo};
                     if (HOROSCOPE.weekly) {
-                        console.log('jan');
-                        return resolve({
-                            meta: {
-                                status: 200
-                            },
-                            data: {
-                                ...HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
-                                week: HOROSCOPE.weekly
-                            }
-                        });
+                        console.log('only weekly found');
+                        return resolve(sendResponse(
+                            HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
+                            HOROSCOPE.weekly[type][0][category]
+                        ))
                     }
                     const week = await getWeekZodiac(options);
-                    parseString(week, async (err, result) => {
+                    parseString(week, async (err, weekResult) => {
                         if (err) {
                             console.error(err);
                             return 'something wrong';
                         }
-                        HOROSCOPE.weekly = {...result.horo};
-                        return resolve({
-                            meta: {
-                                status: 200
-                            },
-                            data: {
-                                ...HOROSCOPE.daily[category][date][type][0],
-                                week: HOROSCOPE.weekly[type]
-                            }
-                        });
+                        HOROSCOPE.weekly = { ...weekResult.horo };
+                        return resolve(sendResponse(
+                            HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
+                            HOROSCOPE.weekly[type][0][category]
+                        ))
                     });
                 });
             })
@@ -164,6 +147,21 @@ async function getWeekZodiac(opts) {
         uri: urls.weekly
     };
     return await rp(options);
+}
+
+function sendResponse(daily, week) {
+    return {
+        meta: {
+            status: 200
+        },
+        data: {
+            yesterday: daily.yesterday[0],
+            today: daily.today[0],
+            tomorrow: daily.tomorrow[0],
+            tomorrow02: daily.tomorrow02[0],
+            week: week[0]
+        }
+    };
 }
 
 module.exports = handlers;
