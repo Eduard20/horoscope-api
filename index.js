@@ -4,6 +4,7 @@ const HapiSwagger = require('hapi-swagger');
 const Inert = require('inert');
 const {getCategories, getZodiacNames, getZodiacByType} = require('./handlers');
 const Vision = require('vision');
+require("./scraper");
 const Routes = [];
 
 Routes.push({
