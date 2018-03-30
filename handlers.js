@@ -3,6 +3,7 @@ const categories = require('./data/categories');
 const zodiacs = require('./data/zodiacs');
 const rp = require("request-promise-native");
 const moment = require("moment");
+const {sendResponse} = require('./common');
 const parseString = require('xml2js').parseString;
 const HOROSCOPE = {
     daily: {
@@ -152,80 +153,6 @@ async function getWeekZodiac(opts) {
         uri: urls.weekly
     };
     return await rp(options);
-}
-
-function sendResponse(daily, week, dates) {
-    // console.log(dates);
-    // const data = [
-    //     {yesterday: daily.yesterday[0]},
-    //     {today: daily.today[0]},
-    //     {tomorrow: daily.tomorrow[0]},
-    //     {tomorrow02: daily.tomorrow02[0]},
-    //     {week: week[0]}
-    // ];
-    const numbers =  [
-        {
-            "name" : "friendship",
-            "number" : "6.25/10"
-        },
-        {
-            "name" : "love",
-            "number" : "8.6/10"
-        },
-        {
-            "name" : "business",
-            "number" : "3.5/10"
-        }
-    ];
-    const data = [
-        {
-            horoscope: {
-                name: "yesterday",
-                data: daily.yesterday[0]
-            },
-            date: dates.yesterday,
-            numbers
-        },
-        {
-            horoscope: {
-                name: "today",
-                data: daily.today[0]
-            },
-            date: dates.today,
-            numbers
-        },
-        {
-            horoscope: {
-                name: "tomorrow",
-                data: daily.tomorrow[0]
-            },
-            date: dates.tomorrow,
-            numbers
-        },
-        {
-            horoscope: {
-                name: "tomorrow02",
-                data: daily.tomorrow02[0]
-            },
-            date: dates.tomorrow02,
-            numbers
-        },
-        {
-            horoscope: {
-                name: "week",
-                data: week[0]
-            },
-            date: 'to be done',
-            numbers
-        },
-    ];
-
-    return {
-        meta: {
-            status: 200
-        },
-        data
-    };
 }
 
 module.exports = handlers;

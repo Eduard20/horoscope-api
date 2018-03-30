@@ -3,6 +3,7 @@ const Hapi = require('hapi');
 const HapiSwagger = require('hapi-swagger');
 const Inert = require('inert');
 const {getCategories, getZodiacNames, getZodiacByType} = require('./handlers');
+const {getZodiacByEnType} = require('./scraper');
 const Vision = require('vision');
 require("./scraper");
 const Routes = [];
@@ -46,6 +47,14 @@ Routes.push({
         description: 'Get Zodiac By type',
         notes: 'Returns zodiacs list',
         tags: ['api'],
+    }
+});
+
+Routes.push({
+    method: 'GET',
+    path: '/api/zodiac/en/{category}/{type}',
+    config: {
+        handler: getZodiacByEnType
     }
 });
 
