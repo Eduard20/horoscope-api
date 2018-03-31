@@ -23,7 +23,8 @@ function sendResponse(request, daily, week, dates) {
         {
             horoscope: {
                 name: request.i18n.__('yesterday'),
-                data: daily.yesterday[0]
+                data: daily.yesterday[0].replace(/\n/g, '')
+
             },
             date: dates.yesterday,
             numbers
@@ -31,7 +32,7 @@ function sendResponse(request, daily, week, dates) {
         {
             horoscope: {
                 name: request.i18n.__('today'),
-                data: daily.today[0]
+                data: daily.today[0].replace(/\n/g, '')
             },
             date: dates.today,
             numbers
@@ -39,7 +40,7 @@ function sendResponse(request, daily, week, dates) {
         {
             horoscope: {
                 name: request.i18n.__('tomorrow'),
-                data: daily.tomorrow[0]
+                data: daily.tomorrow[0].replace(/\n/g, '')
             },
             date: dates.tomorrow,
             numbers
@@ -47,7 +48,7 @@ function sendResponse(request, daily, week, dates) {
         {
             horoscope: {
                 name: request.i18n.__('tomorrow02'),
-                data: daily.tomorrow02[0]
+                data: daily.tomorrow02[0].replace(/\n/g, '')
             },
             date: dates.tomorrow02,
             numbers
@@ -58,7 +59,7 @@ function sendResponse(request, daily, week, dates) {
         data.push({
             horoscope: {
                 name: request.i18n.__('week'),
-                data: week[0]
+                data: week[0].replace(/\n/g, '')
             },
             date: request.i18n.__('week'),
             numbers
