@@ -55,11 +55,9 @@ const urls = {
 const handlers = {
 
     getCategories: (request, h) => {
-        return {
-            meta: {
-                status: '200'
-            },
-            data: [
+        let categories = [];
+        if (request.query.language && 'ru' === request.query.language) {
+            categories = [
                 {
                     "name": request.i18n.__('common'),
                     "theme": "purple"
@@ -84,7 +82,21 @@ const handlers = {
                     "name": request.i18n.__('anti'),
                     "theme": "orange"
                 }
-            ],
+            ];
+        } else {
+            categories = [
+                {
+                    "name": request.i18n.__('common'),
+                    "theme": "purple"
+                }
+            ]
+        }
+
+        return {
+            meta: {
+                status: '200'
+            },
+            data: categories,
             pagination: {
 
             }

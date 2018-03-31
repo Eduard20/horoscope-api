@@ -22,6 +22,12 @@ const zodiac = {
     getZodiacByEnType: async (request, h) => {
         try {
             const { category, type } = request.params;
+            if (!urls[category]) return {
+                meta: {
+                    status: 200
+                },
+                data: []
+            };
             const date = moment(new Date()).format("DD.MM.YYYY");
             const dates = {
                 yesterday: moment(date, "DD-MM-YYYY").subtract(1, 'days').format("DD.MM.YYYY"),

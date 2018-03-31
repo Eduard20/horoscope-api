@@ -58,7 +58,7 @@ Routes.push({
                 locales: ['ru', 'en'],
                 directory: __dirname + '/locales',
                 queryParameter: 'language',
-                defaultLocale: 'ru'
+                defaultLocale: 'en'
             }
         },
         Inert,
