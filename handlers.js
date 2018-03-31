@@ -93,6 +93,7 @@ const handlers = {
             categories = [
                 {
                     "name": request.i18n.__('common'),
+                    "key": "common",
                     "theme": "purple"
                 }
             ]
