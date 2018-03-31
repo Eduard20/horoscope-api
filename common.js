@@ -7,7 +7,7 @@ module.exports = {
 function sendResponse(request, daily, week, dates) {
     const numbers =  [
         {
-            "name" : request.i18n.__('common'),
+            "name" : request.i18n.__('health'),
             "number" : "6.25/10"
         },
         {
