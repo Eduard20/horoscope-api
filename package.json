@@ -12,6 +12,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "hapi": "^17.2.3",
+    "hapi-i18n": "^2.0.0",
     "hapi-swagger": "^9.1.1",
     "inert": "^5.1.0",
     "moment": "^2.21.0",

@@ -17,10 +17,6 @@ const urls = {
     },
 };
 
-const options = {
-    uri: 'http://ignio.com/e/daily/tom02/aries.html',
-};
-
 const zodiac = {
 
     getZodiacByEnType: async (request, h) => {
@@ -38,6 +34,7 @@ const zodiac = {
                 && HOROSCOPE.daily[category][date][type]) {
                 console.log('found daily this date {en}');
                 return sendResponse(
+                    request,
                     HOROSCOPE.daily[category][date][type],
                     null,
                     dates
@@ -59,6 +56,7 @@ const zodiac = {
                 }
             };
             return sendResponse(
+                request,
                 HOROSCOPE.daily[category][date][type],
                 null,
                 dates

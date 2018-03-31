@@ -2,10 +2,8 @@
 const Hapi = require('hapi');
 const HapiSwagger = require('hapi-swagger');
 const Inert = require('inert');
-const {getCategories, getZodiacNames, getZodiacByType} = require('./handlers');
-const {getZodiacByEnType} = require('./scraper');
+const { getCategories, getZodiacByType } = require('./handlers');
 const Vision = require('vision');
-require("./scraper");
 const Routes = [];
 
 Routes.push({
@@ -30,31 +28,12 @@ Routes.push({
 
 Routes.push({
     method: 'GET',
-    path: '/api/zodiac/names',
-    config: {
-        handler: getZodiacNames,
-        description: 'Get Zodiac Names',
-        notes: 'Returns zodiacs list',
-        tags: ['api'],
-    }
-});
-
-Routes.push({
-    method: 'GET',
     path: '/api/zodiac/{category}/{type}',
     config: {
         handler: getZodiacByType,
         description: 'Get Zodiac By type',
         notes: 'Returns zodiacs list',
         tags: ['api'],
-    }
-});
-
-Routes.push({
-    method: 'GET',
-    path: '/api/zodiac/en/{category}/{type}',
-    config: {
-        handler: getZodiacByEnType
     }
 });
 
@@ -73,6 +52,15 @@ Routes.push({
     };
 
     await server.register([
+        {
+            plugin: require('hapi-i18n'),
+            options: {
+                locales: ['ru', 'en'],
+                directory: __dirname + '/locales',
+                queryParameter: 'language',
+                defaultLocale: 'ru'
+            }
+        },
         Inert,
         Vision,
         {
@@ -90,3 +78,8 @@ Routes.push({
 
     server.route(Routes);
 })();
+
+process.on('unhandledRejection', (err) => {
+    console.error(err);
+    process.exit(1);
+});

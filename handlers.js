@@ -1,9 +1,8 @@
 
-const categories = require('./data/categories');
-const zodiacs = require('./data/zodiacs');
 const rp = require("request-promise-native");
 const moment = require("moment");
 const {sendResponse} = require('./common');
+const { getZodiacByEnType } = require('./scraper');
 const parseString = require('xml2js').parseString;
 const HOROSCOPE = {
     daily: {
@@ -22,6 +21,12 @@ const HOROSCOPE = {
         erotic: {
 
         },
+        cook: {
+
+        },
+        anti: {
+
+        }
     },
     weekly: ""
 };
@@ -41,8 +46,8 @@ const urls = {
         health: "http://ignio.com/r/export/utf/xml/daily/hea.xml",
         beauty: "",
         erotic: "http://ignio.com/r/export/utf/xml/daily/ero.xml",
-        gold: ""
-        // car: ""
+        cook: "http://ignio.com/r/export/utf/xml/daily/cook.xml",
+        anti: "http://ignio.com/r/export/utf/xml/daily/anti.xml"
     },
     weekly: "http://ignio.com/r/export/utf/xml/weekly/cur.xml"
 };
@@ -54,19 +59,32 @@ const handlers = {
             meta: {
                 status: '200'
             },
-            data: categories,
-            pagination: {
-
-            }
-        }
-    },
-
-    getZodiacNames: (request, h) => {
-        return {
-            meta: {
-                status: '200'
-            },
-            data: zodiacs,
+            data: [
+                {
+                    "name": request.i18n.__('common'),
+                    "theme": "purple"
+                },
+                {
+                    "name": request.i18n.__('business'),
+                    "theme": "green"
+                },
+                {
+                    "name": request.i18n.__('love'),
+                    "theme": "orange"
+                },
+                {
+                    "name": request.i18n.__('health'),
+                    "theme": "purple"
+                },
+                {
+                    "name": request.i18n.__('cook'),
+                    "theme": "green"
+                },
+                {
+                    "name": request.i18n.__('anti'),
+                    "theme": "orange"
+                }
+            ],
             pagination: {
 
             }
@@ -76,6 +94,10 @@ const handlers = {
     getZodiacByType: async (request, h) => {
         try {
             const { category, type } = request.params;
+            const { language } = request.query;
+            if (language && 'en' === language.toLowerCase()) {
+                return getZodiacByEnType(request, h)
+            }
             const date = moment(new Date()).format("DD.MM.YYYY");
             if (!urls.daily[category]) return 'something wrong';
             if (HOROSCOPE.daily[category] && HOROSCOPE.daily[category][date]) {
@@ -83,6 +105,7 @@ const handlers = {
                 if (HOROSCOPE.weekly) {
                     console.log('also found weekly');
                     return sendResponse(
+                        request,
                         HOROSCOPE.daily[category][date][type][0],
                         HOROSCOPE.weekly[type][0][category],
                         HOROSCOPE.daily[category][date].date[0].$
@@ -97,6 +120,7 @@ const handlers = {
                         }
                         HOROSCOPE.weekly = {...result.horo};
                         return resolve(sendResponse(
+                            request,
                             HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
                             HOROSCOPE.weekly[type][0][category],
                             HOROSCOPE.daily[category][result.horo.date[0].$.today].date[0].$
@@ -120,6 +144,7 @@ const handlers = {
                     if (HOROSCOPE.weekly) {
                         console.log('only weekly found');
                         return resolve(sendResponse(
+                            request,
                             HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
                             HOROSCOPE.weekly[type][0][category],
                             HOROSCOPE.daily[category][result.horo.date[0].$.today].date[0].$
@@ -133,6 +158,7 @@ const handlers = {
                         }
                         HOROSCOPE.weekly = { ...weekResult.horo };
                         return resolve(sendResponse(
+                            request,
                             HOROSCOPE.daily[category][result.horo.date[0].$.today][type][0],
                             HOROSCOPE.weekly[type][0][category],
                             HOROSCOPE.daily[category][result.horo.date[0].$.today].date[0].$

@@ -4,25 +4,25 @@ module.exports = {
     sendResponse
 };
 
-function sendResponse(daily, week, dates) {
+function sendResponse(request, daily, week, dates) {
     const numbers =  [
         {
-            "name" : "friendship",
+            "name" : request.i18n.__('common'),
             "number" : "6.25/10"
         },
         {
-            "name" : "love",
+            "name" : request.i18n.__('love'),
             "number" : "8.6/10"
         },
         {
-            "name" : "business",
+            "name" : request.i18n.__('business'),
             "number" : "3.5/10"
         }
     ];
     const data = [
         {
             horoscope: {
-                name: "yesterday",
+                name: request.i18n.__('yesterday'),
                 data: daily.yesterday[0]
             },
             date: dates.yesterday,
@@ -30,7 +30,7 @@ function sendResponse(daily, week, dates) {
         },
         {
             horoscope: {
-                name: "today",
+                name: request.i18n.__('today'),
                 data: daily.today[0]
             },
             date: dates.today,
@@ -38,7 +38,7 @@ function sendResponse(daily, week, dates) {
         },
         {
             horoscope: {
-                name: "tomorrow",
+                name: request.i18n.__('tomorrow'),
                 data: daily.tomorrow[0]
             },
             date: dates.tomorrow,
@@ -46,7 +46,7 @@ function sendResponse(daily, week, dates) {
         },
         {
             horoscope: {
-                name: "tomorrow02",
+                name: request.i18n.__('tomorrow02'),
                 data: daily.tomorrow02[0]
             },
             date: dates.tomorrow02,
@@ -57,10 +57,10 @@ function sendResponse(daily, week, dates) {
     if (week) {
         data.push({
             horoscope: {
-                name: "week",
+                name: request.i18n.__('week'),
                 data: week[0]
             },
-            date: 'to be done',
+            date: request.i18n.__('week'),
             numbers
         })
     }
