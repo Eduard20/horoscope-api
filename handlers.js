@@ -107,9 +107,8 @@ const handlers = {
         try {
             const { category, type } = request.params;
             const { language } = request.query;
-            if (language && 'en' === language.toLowerCase()) {
-                return getZodiacByEnType(request, h)
-            }
+            if (!language) return getZodiacByEnType(request, h);
+            if ('ru' !== language.toLowerCase()) return getZodiacByEnType(request, h);
             const date = moment(new Date()).format("DD.MM.YYYY");
             if (!urls.daily[category]) return 'something wrong';
             if (HOROSCOPE.daily[category] && HOROSCOPE.daily[category][date]) {
