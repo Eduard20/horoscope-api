@@ -117,7 +117,12 @@ const handlers = {
             if (!language) return getZodiacByEnType(request, h);
             if ('ru' !== language.toLowerCase()) return getZodiacByEnType(request, h);
             const date = moment(new Date()).format("DD.MM.YYYY");
-            if (!urls.daily[category]) return 'something wrong';
+            if (!urls[category]) return {
+                meta: {
+                    status: 200
+                },
+                data: []
+            };
             if (HOROSCOPE.daily[category] && HOROSCOPE.daily[category][date]) {
                 console.log('found daily this date');
                 if (HOROSCOPE.weekly) {
