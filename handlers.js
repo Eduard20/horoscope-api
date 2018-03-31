@@ -60,26 +60,32 @@ const handlers = {
             categories = [
                 {
                     "name": request.i18n.__('common'),
+                    "key": "common",
                     "theme": "purple"
                 },
                 {
                     "name": request.i18n.__('business'),
+                    "key": "business",
                     "theme": "green"
                 },
                 {
                     "name": request.i18n.__('love'),
+                    "key": "love",
                     "theme": "orange"
                 },
                 {
                     "name": request.i18n.__('health'),
+                    "key": "health",
                     "theme": "purple"
                 },
                 {
                     "name": request.i18n.__('cook'),
+                    "key": "cook",
                     "theme": "green"
                 },
                 {
                     "name": request.i18n.__('anti'),
+                    "key": "anti",
                     "theme": "orange"
                 }
             ];
