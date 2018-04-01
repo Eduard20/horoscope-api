@@ -117,7 +117,7 @@ const handlers = {
             if (!language) return getZodiacByEnType(request, h);
             if ('ru' !== language.toLowerCase()) return getZodiacByEnType(request, h);
             const date = moment(new Date()).format("DD.MM.YYYY");
-            if (!urls[category]) return {
+            if (!urls.daily[category]) return {
                 meta: {
                     status: 200
                 },
