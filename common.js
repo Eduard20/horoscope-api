@@ -5,18 +5,19 @@ module.exports = {
 };
 
 function sendResponse(request, daily, week, dates) {
+    const { type } = request.params;
     const numbers =  [
         {
             "name" : request.i18n.__('health'),
-            "number" : "6.25/10"
+            "number" : `${global.NUMBERS[type].health}/10`
         },
         {
             "name" : request.i18n.__('love'),
-            "number" : "8.6/10"
+            "number" : `${global.NUMBERS[type].love}/10`
         },
         {
             "name" : request.i18n.__('business'),
-            "number" : "3.5/10"
+            "number" : `${global.NUMBERS[type].business}/10`
         }
     ];
     const data = [
