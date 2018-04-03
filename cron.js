@@ -76,9 +76,9 @@ function getZodiacCategoryNumbers(categories) {
     return resultObj;
 }
 
-const job = new CronJob({
-    cronTime: '00 30 08 * * 0-6',
-    ...cronContext
-});
-
-job.start();
+// const job = new CronJob({
+//     cronTime: '00 30 08 * * 0-6',
+//     ...cronContext
+// });
+//
+// job.start();
