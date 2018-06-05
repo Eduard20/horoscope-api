@@ -1,25 +1,29 @@
 
+const {makeWeeklyGeneration} = require('./cron');
 
 module.exports = {
     sendResponse
 };
 
-function sendResponse(request, daily, week, dates) {
-    const { type } = request.params;
-    const numbers =  [
+function returnNumbersArray(request, type) {
+    return [
         {
             "name" : request.i18n.__('health'),
-            "number" : `${global.NUMBERS[type].health}/10`
+            "number" : `${type.health}/10`
         },
         {
             "name" : request.i18n.__('love'),
-            "number" : `${global.NUMBERS[type].love}/10`
+            "number" : `${type.love}/10`
         },
         {
             "name" : request.i18n.__('business'),
-            "number" : `${global.NUMBERS[type].business}/10`
+            "number" : `${type.business}/10`
         }
     ];
+}
+
+function sendResponse(request, daily, week, dates) {
+    const { type } = request.params;
     const data = [
         {
             horoscope: {
@@ -28,7 +32,9 @@ function sendResponse(request, daily, week, dates) {
 
             },
             date: dates.yesterday,
-            numbers
+            numbers: global.NUMBERS[dates.yesterday]
+                ? returnNumbersArray(request,global.NUMBERS[dates.yesterday][type])
+                : returnNumbersArray(request,makeWeeklyGeneration(dates.today)[dates.yesterday][type])
         },
         {
             horoscope: {
@@ -36,7 +42,9 @@ function sendResponse(request, daily, week, dates) {
                 data: daily.today[0].replace(/\n/g, '')
             },
             date: dates.today,
-            numbers
+            numbers: global.NUMBERS[dates.today]
+                ? returnNumbersArray(request,global.NUMBERS[dates.today][type])
+                : returnNumbersArray(request,makeWeeklyGeneration(dates.today)[dates.today][type])
         },
         {
             horoscope: {
@@ -44,17 +52,24 @@ function sendResponse(request, daily, week, dates) {
                 data: daily.tomorrow[0].replace(/\n/g, '')
             },
             date: dates.tomorrow,
-            numbers
-        },
-        // {
-        //     horoscope: {
-        //         name: request.i18n.__('tomorrow02'),
-        //         data: daily.tomorrow02[0].replace(/\n/g, '')
-        //     },
-        //     date: dates.tomorrow02,
-        //     numbers
-        // }
+            numbers: global.NUMBERS[dates.tomorrow]
+                ? returnNumbersArray(request,global.NUMBERS[dates.tomorrow][type])
+                : returnNumbersArray(request,makeWeeklyGeneration(dates.today)[dates.tomorrow][type])
+        }
     ];
+
+    if (dates.tomorrow02) {
+        data.push(        {
+            horoscope: {
+                name: request.i18n.__('tomorrow02'),
+                data: daily.tomorrow02[0].replace(/\n/g, '')
+            },
+            date: dates.tomorrow02,
+            numbers: global.NUMBERS[dates.tomorrow02]
+                ? returnNumbersArray(request,global.NUMBERS[dates.tomorrow02][type])
+                : returnNumbersArray(request,makeWeeklyGeneration(dates.today)[dates.tomorrow02][type])
+        })
+    }
 
     if (week) {
         data.push({
@@ -63,7 +78,9 @@ function sendResponse(request, daily, week, dates) {
                 data: week[0].replace(/\n/g, '')
             },
             date: request.i18n.__('week'),
-            numbers
+            numbers: global.NUMBERS.week
+                ? returnNumbersArray(request,global.NUMBERS.week[type])
+                : returnNumbersArray(request,makeWeeklyGeneration()['week'][type])
         })
     }
 
