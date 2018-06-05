@@ -46,14 +46,14 @@ function sendResponse(request, daily, week, dates) {
             date: dates.tomorrow,
             numbers
         },
-        {
-            horoscope: {
-                name: request.i18n.__('tomorrow02'),
-                data: daily.tomorrow02[0].replace(/\n/g, '')
-            },
-            date: dates.tomorrow02,
-            numbers
-        }
+        // {
+        //     horoscope: {
+        //         name: request.i18n.__('tomorrow02'),
+        //         data: daily.tomorrow02[0].replace(/\n/g, '')
+        //     },
+        //     date: dates.tomorrow02,
+        //     numbers
+        // }
     ];
 
     if (week) {

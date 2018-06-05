@@ -3,6 +3,7 @@ const rp = require("request-promise-native");
 const moment = require("moment");
 const {sendResponse} = require('./common');
 const { getZodiacByEnType } = require('./scraper');
+const {getZodiacByOtherLanguage} = require('./findfateApi');
 const parseString = require('xml2js').parseString;
 const HOROSCOPE = {
     daily: {
@@ -114,8 +115,8 @@ const handlers = {
         try {
             const { category, type } = request.params;
             const { language } = request.query;
-            if (!language) return getZodiacByEnType(request, h);
-            if ('ru' !== language.toLowerCase()) return getZodiacByEnType(request, h);
+            if (!language) return getZodiacByOtherLanguage(request, h);
+            if ('ru' !== language.toLowerCase()) return getZodiacByOtherLanguage(request, h);
             const date = moment(new Date()).format("DD.MM.YYYY");
             if (!urls.daily[category]) return {
                 meta: {

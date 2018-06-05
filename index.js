@@ -56,7 +56,7 @@ Routes.push({
         {
             plugin: require('hapi-i18n'),
             options: {
-                locales: ['ru', 'en'],
+                locales: ['ru', 'en', 'es', 'nl', 'de', 'fr', 'pt', 'ms'],
                 directory: __dirname + '/locales',
                 queryParameter: 'language',
                 defaultLocale: 'en'
