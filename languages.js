@@ -37,6 +37,11 @@ const languages = [
 
 module.exports = {
     getLanguages: () => {
-        return languages
+        return {
+            meta: {
+                status: 200
+            },
+            data: languages
+        }
     }
 };
