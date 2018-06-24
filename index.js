@@ -3,6 +3,7 @@ const Hapi = require('hapi');
 const HapiSwagger = require('hapi-swagger');
 const Inert = require('inert');
 const { getCategories, getZodiacByType } = require('./handlers');
+const {getLanguages} = require('./languages');
 const Vision = require('vision');
 require('./cron');
 const Routes = [];
@@ -15,6 +16,16 @@ Routes.push({
     }
 });
 
+Routes.push({
+    method: 'GET',
+    path: '/api/zodiac/signs',
+    config: {
+        handler: getCategories,
+        description: 'Get Categories',
+        notes: 'Returns categories list',
+        tags: ['api'],
+    }
+});
 
 Routes.push({
     method: 'GET',
@@ -34,6 +45,17 @@ Routes.push({
         handler: getZodiacByType,
         description: 'Get Zodiac By type',
         notes: 'Returns zodiacs list',
+        tags: ['api'],
+    }
+});
+
+Routes.push({
+    method: 'GET',
+    path: '/api/languages',
+    config: {
+        handler: getLanguages,
+        description: 'Get The List Of Supported Languages',
+        notes: 'Returns languages list',
         tags: ['api'],
     }
 });
