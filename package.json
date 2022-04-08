@@ -16,7 +16,7 @@
     "hapi-i18n": "^2.1.4",
     "hapi-swagger": "^9.4.2",
     "inert": "^5.1.3",
-    "moment": "2.22.0",
+    "moment": "2.29.2",
     "request": "2.85.0",
     "request-promise-native": "1.0.5",
     "vision": "^5.4.4",
